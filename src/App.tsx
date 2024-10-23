@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PageTitle from "./components/common/PageTitle";
 import Text from "./components/common/Text";
 import Header from "./components/landing/Header";
 import ActionButton from "./components/common/ActionButton";
 import ImageGrid from "./components/common/ImageGrid";
 import { useAreas } from "./components/common/AreaContext";
+import useImage from "use-image";
 
 export default function App() {
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -12,6 +13,21 @@ export default function App() {
 	const [bedWidth, setBedWidth] = useState<number>(500);
 	const [saved, setSaved] = useState<boolean>(false);
 	const { selectedAreas } = useAreas();
+	const [objectURL, setObjectURL] = useState<string>("");
+
+	useEffect(() => {
+		if (selectedFile) {
+			const url = URL.createObjectURL(selectedFile);
+			setObjectURL(url);
+
+			// Clean up the object URL when the component unmounts or selectedFile changes
+			return () => {
+				URL.revokeObjectURL(url);
+			};
+		}
+	}, [selectedFile]);
+
+	const [image] = useImage(objectURL);
 
 	const handleNumberOfBedsChange = (
 		event: React.ChangeEvent<HTMLInputElement>
@@ -67,7 +83,7 @@ export default function App() {
 								<div className="flex gap-4 justify-around items-center">
 									<div className="w-3/4 h-screen">
 										<ImageGrid
-											src={URL.createObjectURL(selectedFile)}
+											src={objectURL}
 											ngrids={numberOfBeds}
 											gridWidth={bedWidth}
 										/>
@@ -88,7 +104,7 @@ export default function App() {
 											<input
 												type="range"
 												min="30"
-												max="550"
+												max={image?.width}
 												value={bedWidth}
 												onChange={handleBedWidthChange}
 											/>
