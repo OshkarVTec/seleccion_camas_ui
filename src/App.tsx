@@ -11,35 +11,32 @@ export default function App() {
 		}
 	};
 
-	const handleUpload = () => {
-		if (selectedFile) {
-			// Handle the file upload logic here
-			console.log("Uploading:", selectedFile.name);
-		}
-	};
 	return (
-		<main className="bg-white flex flex-col p-10">
+		<>
+			{" "}
 			<Header />
-			<div className="my-10">
-				<PageTitle>Instrucciones</PageTitle>
-				<Text>Texto</Text>
-			</div>
-			<div className="my-10">
-				<PageTitle>Selección de fotos</PageTitle>
-				<input type="file" onChange={handleFileChange} />
-			</div>
-			<div className="my-10">
-				<PageTitle>Selección de camas</PageTitle>
-				{selectedFile && (
-					<div>
-						<img
-							src={URL.createObjectURL(selectedFile)}
-							alt="Selected"
-							className="max-w-full h-auto"
-						/>
-					</div>
-				)}
-			</div>
-		</main>
+			<main className="bg-white flex flex-col p-10">
+				<div className="my-10">
+					<PageTitle>Instrucciones</PageTitle>
+					<Text>Texto</Text>
+				</div>
+				<div className="my-10">
+					<PageTitle>Selección de fotos</PageTitle>
+					<input type="file" onChange={handleFileChange} />
+				</div>
+				<div className="my-10">
+					<PageTitle>Selección de camas</PageTitle>
+					{selectedFile && (
+						<div>
+							<img
+								src={URL.createObjectURL(selectedFile)}
+								alt="Selected"
+								className="max-w-full h-auto"
+							/>
+						</div>
+					)}
+				</div>
+			</main>
+		</>
 	);
 }
