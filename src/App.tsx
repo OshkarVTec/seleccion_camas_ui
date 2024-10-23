@@ -8,7 +8,7 @@ import { useAreas } from "./components/common/AreaContext";
 
 export default function App() {
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
-	const [numberOfBeds, setNumberOfBeds] = useState<number>(0);
+	const [numberOfBeds, setNumberOfBeds] = useState<number>(1);
 	const [bedWidth, setBedWidth] = useState<number>(0);
 	const [saved, setSaved] = useState<boolean>(false);
 	const { selectedAreas } = useAreas();
