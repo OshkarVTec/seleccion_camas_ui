@@ -64,8 +64,7 @@ export default function App() {
 							<PageTitle>¡Listo!</PageTitle>
 							<Text>
 								Se ha guardado tu selección, el modelo está listo. Ya puedes
-								cerrar esta aplicación. Si quieres empezar de nuevo, selecciona
-								otra imagen.{" "}
+								cerrar esta aplicación.{" "}
 							</Text>
 						</div>
 					) : (
