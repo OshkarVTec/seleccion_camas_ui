@@ -55,7 +55,6 @@ export default function App() {
 					<input type="file" onChange={handleFileChange} />
 				</div>
 				<div className="flex flex-col gap-2 my-10">
-					<PageTitle>Selección de camas</PageTitle>
 					{saved ? (
 						<div className="flex flex-col gap-2 my-10">
 							<PageTitle>¡Listo!</PageTitle>
@@ -67,36 +66,39 @@ export default function App() {
 						</div>
 					) : (
 						selectedFile && (
-							<div className="flex gap-4 justify-around">
-								<img
-									src={URL.createObjectURL(selectedFile)}
-									alt="Selected"
-									className="w-3/4 h-auto"
-								/>
-								<div className="flex flex-col justify-center gap-10">
-									<label className="flex flex-col justify-center gap-2 p-2 border-2 border-solid border-green-800 rounded-xl">
-										Número de camas
-										<input
-											value={numberOfBeds}
-											id="beds"
-											type="number"
-											placeholder="Número de camas"
-											onChange={handleNumberOfBedsChange}
-										/>
-									</label>
-									<label className="flex flex-col justify-center gap-2  p-2 border-2 border-solid border-green-800 rounded-xl">
-										Ancho de las camas
-										<input
-											type="range"
-											min="30"
-											max="700"
-											value={bedWidth}
-											onChange={handleBedWidthChange}
-										/>
-									</label>
-									<ActionButton onClick={handleSave}>Guardar</ActionButton>
+							<>
+								<PageTitle>Selección de camas</PageTitle>
+								<div className="flex gap-4 justify-around">
+									<img
+										src={URL.createObjectURL(selectedFile)}
+										alt="Selected"
+										className="w-3/4 h-auto"
+									/>
+									<div className="flex flex-col justify-center gap-10">
+										<label className="flex flex-col justify-center gap-2 p-2 border-2 border-solid border-green-800 rounded-xl">
+											Número de camas
+											<input
+												value={numberOfBeds}
+												id="beds"
+												type="number"
+												placeholder="Número de camas"
+												onChange={handleNumberOfBedsChange}
+											/>
+										</label>
+										<label className="flex flex-col justify-center gap-2  p-2 border-2 border-solid border-green-800 rounded-xl">
+											Ancho de las camas
+											<input
+												type="range"
+												min="30"
+												max="700"
+												value={bedWidth}
+												onChange={handleBedWidthChange}
+											/>
+										</label>
+										<ActionButton onClick={handleSave}>Guardar</ActionButton>
+									</div>
 								</div>
-							</div>
+							</>
 						)
 					)}
 				</div>
