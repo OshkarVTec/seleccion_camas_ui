@@ -17,8 +17,8 @@ export default function App() {
 		event: React.ChangeEvent<HTMLInputElement>
 	) => {
 		let numberOfBeds = parseInt(event.target.value);
-		if (numberOfBeds < 0) {
-			numberOfBeds = 0;
+		if (numberOfBeds < 1) {
+			numberOfBeds = 1;
 		}
 		if (numberOfBeds > 10) {
 			numberOfBeds = 10;
@@ -72,7 +72,11 @@ export default function App() {
 							<>
 								<PageTitle>Selección de camas</PageTitle>
 								<div className="flex gap-4 justify-around">
-									<ImageGrid src={URL.createObjectURL(selectedFile)} />
+									<ImageGrid
+										src={URL.createObjectURL(selectedFile)}
+										ngrids={numberOfBeds}
+										gridWidth={bedWidth}
+									/>
 									<div className="flex flex-col justify-center gap-10">
 										<label className="flex flex-col justify-center gap-2 p-2 border-2 border-solid border-green-800 rounded-xl">
 											Número de camas
