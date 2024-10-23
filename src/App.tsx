@@ -26,13 +26,6 @@ export default function App() {
 		setNumberOfBeds(numberOfBeds);
 	};
 	const handleBedWidthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		let bedWidth = parseInt(event.target.value);
-		if (bedWidth < 30) {
-			bedWidth = 30;
-		}
-		if (bedWidth > 550) {
-			bedWidth = 550;
-		}
 		setBedWidth(parseInt(event.target.value));
 	};
 	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
