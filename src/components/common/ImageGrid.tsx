@@ -29,8 +29,8 @@ const generateInitialAreas = (ngrids: number, gridWidth: number): Area[] => {
 	const areas: Area[] = [];
 	for (let i = 0; i < ngrids; i++) {
 		areas.push({
-			x: 10,
-			y: 10,
+			x: 0,
+			y: 0,
 			width: gridWidth,
 			height: gridWidth * 2,
 		});
@@ -48,10 +48,8 @@ export default function ImageGrid({ src, ngrids = 4, gridWidth = 300 }: Props) {
 
 	// Generar las áreas iniciales
 	useEffect(() => {
-		if (selectedAreas.length === 0) {
-			setSelectedAreas(generateInitialAreas(ngrids, gridWidth));
-		}
-	}, [ngrids, gridWidth, selectedAreas, setSelectedAreas]);
+		setSelectedAreas(generateInitialAreas(ngrids, gridWidth));
+	}, [ngrids, gridWidth]);
 
 	const handleDragEnd = (index: number) => {
 		if (stageRef.current) {

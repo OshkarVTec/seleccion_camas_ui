@@ -104,7 +104,7 @@ export default function App() {
 											<input
 												type="range"
 												min="30"
-												max={image?.width}
+												max={image?.height ? image.height / 2 : 1000}
 												value={bedWidth}
 												onChange={handleBedWidthChange}
 											/>
