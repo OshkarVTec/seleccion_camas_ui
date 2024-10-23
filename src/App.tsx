@@ -30,8 +30,8 @@ export default function App() {
 		if (bedWidth < 30) {
 			bedWidth = 30;
 		}
-		if (bedWidth > 700) {
-			bedWidth = 700;
+		if (bedWidth > 550) {
+			bedWidth = 550;
 		}
 		setBedWidth(parseInt(event.target.value));
 	};
@@ -95,7 +95,7 @@ export default function App() {
 											<input
 												type="range"
 												min="30"
-												max="700"
+												max="550"
 												value={bedWidth}
 												onChange={handleBedWidthChange}
 											/>
