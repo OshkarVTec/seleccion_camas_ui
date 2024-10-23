@@ -28,6 +28,7 @@ export default function App() {
 	}, [selectedFile]);
 
 	const [image] = useImage(objectURL);
+	const imageHeight = image?.height || 1000;
 
 	const handleNumberOfBedsChange = (
 		event: React.ChangeEvent<HTMLInputElement>
@@ -81,7 +82,7 @@ export default function App() {
 							<>
 								<PageTitle>Selección de camas</PageTitle>
 								<div className="flex gap-4 justify-around items-center">
-									<div className="w-3/4 h-screen">
+									<div className={`w-3/4 h-[${imageHeight}px]`}>
 										<ImageGrid
 											src={objectURL}
 											ngrids={numberOfBeds}
