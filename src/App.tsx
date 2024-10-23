@@ -3,12 +3,15 @@ import PageTitle from "./components/common/PageTitle";
 import Text from "./components/common/Text";
 import Header from "./components/landing/Header";
 import ActionButton from "./components/common/ActionButton";
+import ImageGrid from "./components/common/ImageGrid";
+import { useAreas } from "./components/common/AreaContext";
 
 export default function App() {
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
 	const [numberOfBeds, setNumberOfBeds] = useState<number>(0);
 	const [bedWidth, setBedWidth] = useState<number>(0);
 	const [saved, setSaved] = useState<boolean>(false);
+	const { selectedAreas } = useAreas();
 
 	const handleNumberOfBedsChange = (
 		event: React.ChangeEvent<HTMLInputElement>
@@ -39,6 +42,7 @@ export default function App() {
 	};
 	const handleSave = () => {
 		setSaved(true);
+		console.log(selectedAreas);
 	};
 
 	return (
@@ -69,11 +73,7 @@ export default function App() {
 							<>
 								<PageTitle>Selección de camas</PageTitle>
 								<div className="flex gap-4 justify-around">
-									<img
-										src={URL.createObjectURL(selectedFile)}
-										alt="Selected"
-										className="w-3/4 h-auto"
-									/>
+									<ImageGrid src={URL.createObjectURL(selectedFile)} />
 									<div className="flex flex-col justify-center gap-10">
 										<label className="flex flex-col justify-center gap-2 p-2 border-2 border-solid border-green-800 rounded-xl">
 											Número de camas
