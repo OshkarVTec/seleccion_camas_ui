@@ -82,7 +82,7 @@ export default function App() {
 							<>
 								<PageTitle>Selección de camas</PageTitle>
 								<div className="flex gap-4 justify-around items-center">
-									<div className={`w-3/4 h-[${imageHeight}px]`}>
+									<div className={`w-3/4 h-[${imageHeight}px] overflow-hidden`}>
 										<ImageGrid
 											src={objectURL}
 											ngrids={numberOfBeds}
