@@ -24,20 +24,6 @@ interface Area {
 	height: number;
 }
 
-// Función para generar las áreas iniciales
-const generateInitialAreas = (ngrids: number, gridWidth: number): Area[] => {
-	const areas: Area[] = [];
-	for (let i = 0; i < ngrids; i++) {
-		areas.push({
-			x: 0,
-			y: 0,
-			width: gridWidth,
-			height: gridWidth * 2,
-		});
-	}
-	return areas;
-};
-
 export default function ImageGrid({ src, ngrids = 4, gridWidth = 300 }: Props) {
 	const [image] = useImage(src || "");
 
@@ -46,10 +32,63 @@ export default function ImageGrid({ src, ngrids = 4, gridWidth = 300 }: Props) {
 
 	const { selectedAreas, setSelectedAreas } = useAreas();
 
-	// Generar las áreas iniciales
+	// Generar las áreas
 	useEffect(() => {
-		setSelectedAreas(generateInitialAreas(ngrids, gridWidth));
-	}, [ngrids, gridWidth]);
+		setSelectedAreas((prev: Area[]) => {
+			const newAreas = [...prev];
+	
+			// Obtener el ancho y alto de la imagen (con escalado)
+			const stage = stageRef.current?.getStage();
+			const imageWidth = stage?.width() || 0;
+			const imageHeight = stage?.height() || 0;
+	
+			// Si hay más cuadros que áreas actuales, agregar las nuevas áreas
+			if (ngrids > prev.length) {
+				for (let i = prev.length; i < ngrids; i++) {
+					newAreas.push({
+						x: 0,
+						y: 0,
+						width: gridWidth,
+						height: gridWidth * 2,
+					});
+				}
+			}
+	
+			// Actualizar el tamaño y la posición de las áreas existentes
+			return newAreas.map((area) => {
+				let newX = area.x;
+				let newY = area.y;
+	
+				// Ajustar la posición y
+				const areaBottom = area.y + gridWidth * 2 * scaleFactor;
+				if (areaBottom > imageHeight) {
+					const excessY = areaBottom - imageHeight;
+					newY -= Math.min(excessY, 1);
+				} else if (area.y < 0) {
+					const excessY = Math.abs(area.y);
+					newY += Math.min(excessY, 1); 
+				}
+	
+				// Ajustar la posición x
+				const areaRight = area.x + gridWidth * scaleFactor;
+				if (areaRight > imageWidth) {
+					const excessX = areaRight - imageWidth;
+					newX -= Math.min(excessX, 1);
+				} else if (area.x < 0) {
+					const excessX = Math.abs(area.x);
+					newX += Math.min(excessX, 1);
+				}
+	
+				return {
+					...area,
+					width: gridWidth,
+					height: gridWidth * 2,
+					x: newX,
+					y: newY,
+				};
+			});
+		});
+	}, [ngrids, gridWidth, setSelectedAreas]);	
 
 	const handleDragEnd = (index: number) => {
 		if (stageRef.current) {
