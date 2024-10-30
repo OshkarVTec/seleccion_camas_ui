@@ -1,6 +1,7 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
+import fs from "fs";
 
 // Get __dirname equivalent in ES module
 const __filename = fileURLToPath(import.meta.url);
@@ -13,6 +14,8 @@ const createWindow = () => {
 		height: 600,
 		webPreferences: {
 			preload: join(__dirname, "preload.js"),
+			contextIsolation: false,
+			nodeIntegration: true,
 		},
 	});
 
@@ -38,4 +41,19 @@ app.whenReady().then(() => {
 // explicitly with Cmd + Q.
 app.on("window-all-closed", () => {
 	if (process.platform !== "darwin") app.quit();
+});
+
+// Handle saving JSON output
+ipcMain.on("save-json", (event, jsonData) => {
+	const filePath = join(app.getPath("documents"), "output.json");
+
+	fs.writeFile(filePath, JSON.stringify(jsonData, null, 2), (err) => {
+		if (err) {
+			console.error("Failed to save JSON file:", err);
+			event.reply("save-json-response", "Failed to save JSON file");
+		} else {
+			console.log("JSON file saved successfully");
+			event.reply("save-json-response", "JSON file saved successfully");
+		}
+	});
 });

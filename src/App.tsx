@@ -6,6 +6,7 @@ import ActionButton from "./components/common/ActionButton";
 import ImageGrid from "./components/common/ImageGrid";
 import { useAreas } from "./components/common/AreaContext";
 import useImage from "use-image";
+const { ipcRenderer } = window.require("electron");
 
 export default function App() {
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -30,6 +31,17 @@ export default function App() {
 	const [image] = useImage(objectURL);
 	const imageHeight = image?.height || 1000;
 
+	const saveDataAsJSON = (data: SelectedAreas[]) => {
+		ipcRenderer.send("save-json", data);
+
+		ipcRenderer.once(
+			"save-json-response",
+			(_: any, responseMessage: string) => {
+				console.log(responseMessage);
+			}
+		);
+	};
+
 	const handleNumberOfBedsChange = (
 		event: React.ChangeEvent<HTMLInputElement>
 	) => {
@@ -52,6 +64,9 @@ export default function App() {
 	};
 	const handleSave = () => {
 		setSaved(true);
+		// Usage example
+
+		saveDataAsJSON(selectedAreas);
 		console.log(selectedAreas);
 	};
 
@@ -62,20 +77,22 @@ export default function App() {
 			<main className="bg-white flex flex-col p-10">
 				<div className="flex flex-col gap-2 my-10">
 					<PageTitle>Instrucciones generales</PageTitle>
-					<Text>En esta aplicación se seleccionará una foto de base para definir el número de camas y el tamaño de cada una de ellas.
-						Para de esta manera, poder compartir información al modelo. Se detallará de mejor manera cada instrucción en el apartado correspondiente.
+					<Text>
+						En esta aplicación se seleccionará una foto de base para definir el
+						número de camas y el tamaño de cada una de ellas. Para de esta
+						manera, poder compartir información al modelo. Se detallará de mejor
+						manera cada instrucción en el apartado correspondiente.
 					</Text>
 				</div>
 				<div className="flex flex-col gap-2 my-10">
 					<PageTitle>Selección de fotos</PageTitle>
 					<Text>
-						Selecciona una foto con las camas que deseas analizar, esta foto debe de estar en la misma posición que en la que se buscará hacer el análisis de tiempo real. Debe ser una imágen de formato jpg, jpeg o png.
+						Selecciona una foto con las camas que deseas analizar, esta foto
+						debe de estar en la misma posición que en la que se buscará hacer el
+						análisis de tiempo real. Debe ser una imágen de formato jpg, jpeg o
+						png.
 					</Text>
-					<input
-						type="file"
-						accept="image/*"
-						onChange={handleFileChange}
-					/>
+					<input type="file" accept="image/*" onChange={handleFileChange} />
 				</div>
 				<div className="flex flex-col gap-2 my-10">
 					{saved ? (
@@ -91,10 +108,13 @@ export default function App() {
 							<>
 								<PageTitle>Selección de camas</PageTitle>
 								<Text>
-									1. Agrega o quita camas con el campo de número de camas. <br />
-									2. Ajusta el ancho de las camas con el control deslizante. <br />
+									1. Agrega o quita camas con el campo de número de camas.{" "}
+									<br />
+									2. Ajusta el ancho de las camas con el control deslizante.{" "}
+									<br />
 									3. Mueve las cuadriculas para ajustarlas a las camas. <br />
-									4. Puedes ir probando los cambios e ir ajustando los parámetros. <br />
+									4. Puedes ir probando los cambios e ir ajustando los
+									parámetros. <br />
 									5. Cuando estés listo, da clic en guardar. <br />
 								</Text>
 								<div className="flex gap-4 justify-around items-center">
@@ -136,4 +156,11 @@ export default function App() {
 			</main>
 		</>
 	);
+}
+
+interface SelectedAreas {
+	x: number;
+	y: number;
+	width: number;
+	height: number;
 }
