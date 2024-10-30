@@ -57,3 +57,8 @@ ipcMain.on("save-json", (event, jsonData) => {
 		}
 	});
 });
+
+// Listen for the 'close-app' event from the renderer process
+ipcMain.on("close-app", () => {
+	app.quit();
+});
