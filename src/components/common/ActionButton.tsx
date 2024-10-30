@@ -4,7 +4,7 @@ export default function ActionButton({ children, onClick }: ActionButtonProps) {
 	return (
 		<button
 			onClick={onClick}
-			className="p-4 bg-green-700 text-white font-bold rounded-xl"
+			className="p-4 bg-green-700 text-white font-bold rounded-xl flex-1"
 		>
 			{children}
 		</button>
