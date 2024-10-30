@@ -61,12 +61,21 @@ export default function App() {
 			<Header />
 			<main className="bg-white flex flex-col p-10">
 				<div className="flex flex-col gap-2 my-10">
-					<PageTitle>Instrucciones</PageTitle>
-					<Text>Texto</Text>
+					<PageTitle>Instrucciones generales</PageTitle>
+					<Text>En esta aplicación se seleccionará una foto de base para definir el número de camas y el tamaño de cada una de ellas.
+						Para de esta manera, poder compartir información al modelo. Se detallará de mejor manera cada instrucción en el apartado correspondiente.
+					</Text>
 				</div>
 				<div className="flex flex-col gap-2 my-10">
 					<PageTitle>Selección de fotos</PageTitle>
-					<input type="file" onChange={handleFileChange} />
+					<Text>
+						Selecciona una foto con las camas que deseas analizar, esta foto debe de estar en la misma posición que en la que se buscará hacer el análisis de tiempo real. Debe ser una imágen de formato jpg, jpeg o png.
+					</Text>
+					<input
+						type="file"
+						accept="image/*"
+						onChange={handleFileChange}
+					/>
 				</div>
 				<div className="flex flex-col gap-2 my-10">
 					{saved ? (
@@ -81,6 +90,13 @@ export default function App() {
 						selectedFile && (
 							<>
 								<PageTitle>Selección de camas</PageTitle>
+								<Text>
+									1. Agrega o quita camas con el campo de número de camas. <br />
+									2. Ajusta el ancho de las camas con el control deslizante. <br />
+									3. Mueve las cuadriculas para ajustarlas a las camas. <br />
+									4. Puedes ir probando los cambios e ir ajustando los parámetros. <br />
+									5. Cuando estés listo, da clic en guardar. <br />
+								</Text>
 								<div className="flex gap-4 justify-around items-center">
 									<div className={`w-3/4 h-[${imageHeight}px] overflow-hidden`}>
 										<ImageGrid

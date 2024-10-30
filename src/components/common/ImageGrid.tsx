@@ -63,20 +63,20 @@ export default function ImageGrid({ src, ngrids = 4, gridWidth = 300 }: Props) {
 				const areaBottom = area.y + gridWidth * 2 * scaleFactor;
 				if (areaBottom > imageHeight) {
 					const excessY = areaBottom - imageHeight;
-					newY -= Math.min(excessY, 1);
+					newY -= excessY;
 				} else if (area.y < 0) {
 					const excessY = Math.abs(area.y);
-					newY += Math.min(excessY, 1); 
+					newY += excessY; 
 				}
 	
 				// Ajustar la posición x
 				const areaRight = area.x + gridWidth * scaleFactor;
 				if (areaRight > imageWidth) {
 					const excessX = areaRight - imageWidth;
-					newX -= Math.min(excessX, 1);
+					newX -= excessX;
 				} else if (area.x < 0) {
 					const excessX = Math.abs(area.x);
-					newX += Math.min(excessX, 1);
+					newX += excessX;
 				}
 	
 				return {
