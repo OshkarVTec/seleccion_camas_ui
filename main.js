@@ -10,14 +10,16 @@ const __dirname = dirname(__filename);
 const createWindow = () => {
 	// Create the browser window.
 	const mainWindow = new BrowserWindow({
-		width: 800,
-		height: 600,
+		width: 1200,
+		height: 800,
 		webPreferences: {
 			preload: join(__dirname, "preload.js"),
 			contextIsolation: false,
 			nodeIntegration: true,
 		},
 	});
+
+	mainWindow.maximize();
 
 	// and load the index.html of the app.
 	mainWindow.loadFile(join(__dirname, "dist", "index.html"));
