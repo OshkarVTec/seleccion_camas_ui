@@ -1,8 +1,8 @@
-import React from 'react';
-import { useRef, useEffect } from 'react';
-import { Stage, Layer, Image, Rect, Text } from 'react-konva';
-import useImage from 'use-image';
-import { useAreas } from './AreaContext';
+import React from "react";
+import { useRef, useEffect } from "react";
+import { Stage, Layer, Image, Rect, Text } from "react-konva";
+import useImage from "use-image";
+import { useAreas } from "./AreaContext";
 
 const colors = [
 	"rgba(255, 255, 255, 0.4)", // Blanco semi-transparente
@@ -25,7 +25,12 @@ interface Area {
 	height: number;
 }
 
-export default function ImageGrid({ src, ngrids = 4, gridWidth = 300 }: Props) {
+export default function ImageGrid({
+	src,
+	ngrids = 4,
+	gridWidth = 300,
+	isActive = true,
+}: Props) {
 	const [image] = useImage(src || "");
 
 	const stageRef = useRef<any>(null);
@@ -55,38 +60,41 @@ export default function ImageGrid({ src, ngrids = 4, gridWidth = 300 }: Props) {
 				}
 			}
 
-			// Actualizar el tamaño y la posición de las áreas existentes
+			// Actualizar el tamaño y la posición de las áreas existentes solo si no están ya definidas
 			return newAreas.map((area) => {
-				let newX = area.x;
-				let newY = area.y;
+				if (area.x === 0 && area.y === 0) {
+					let newX = area.x;
+					let newY = area.y;
 
-				// Ajustar la posición y
-				const areaBottom = area.y + gridWidth * 2 * scaleFactor;
-				if (areaBottom > imageHeight) {
-					const excessY = areaBottom - imageHeight;
-					newY -= excessY;
-				} else if (area.y < 0) {
-					const excessY = Math.abs(area.y);
-					newY += excessY;
+					// Ajustar la posición y
+					const areaBottom = area.y + gridWidth * 2 * scaleFactor;
+					if (areaBottom > imageHeight) {
+						const excessY = areaBottom - imageHeight;
+						newY -= excessY;
+					} else if (area.y < 0) {
+						const excessY = Math.abs(area.y);
+						newY += excessY;
+					}
+
+					// Ajustar la posición x
+					const areaRight = area.x + gridWidth * scaleFactor;
+					if (areaRight > imageWidth) {
+						const excessX = areaRight - imageWidth;
+						newX -= excessX;
+					} else if (area.x < 0) {
+						const excessX = Math.abs(area.x);
+						newX += excessX;
+					}
+
+					return {
+						...area,
+						width: gridWidth,
+						height: gridWidth * 2,
+						x: newX,
+						y: newY,
+					};
 				}
-
-				// Ajustar la posición x
-				const areaRight = area.x + gridWidth * scaleFactor;
-				if (areaRight > imageWidth) {
-					const excessX = areaRight - imageWidth;
-					newX -= excessX;
-				} else if (area.x < 0) {
-					const excessX = Math.abs(area.x);
-					newX += excessX;
-				}
-
-				return {
-					...area,
-					width: gridWidth,
-					height: gridWidth * 2,
-					x: newX,
-					y: newY,
-				};
+				return area;
 			});
 		});
 	}, [ngrids, gridWidth, setSelectedAreas]);
@@ -159,9 +167,9 @@ export default function ImageGrid({ src, ngrids = 4, gridWidth = 300 }: Props) {
 									fill={colors[index % colors.length]}
 									stroke="white"
 									strokeWidth={2}
-									draggable
-									onDragMove={handleDragMove}
-									onDragEnd={() => handleDragEnd(index)}
+									draggable={isActive}
+									onDragMove={isActive ? handleDragMove : undefined}
+									onDragEnd={isActive ? () => handleDragEnd(index) : undefined}
 								/>
 								<Text
 									x={area.x * scaleFactor + 5}
@@ -186,4 +194,5 @@ interface Props {
 	src?: string;
 	ngrids?: number;
 	gridWidth?: number;
+	isActive?: boolean;
 }

@@ -83,8 +83,16 @@ export default function App() {
 						<PageTitle>¡Listo!</PageTitle>
 						<Text>
 							Se ha guardado tu selección, el modelo está listo. Ya puedes
-							cerrar esta aplicación.{" "}
+							cerrar esta aplicación. Se recomienda tomar una captura de
+							pantalla del orden de las camas.{" "}
 						</Text>
+						<ImageGrid
+							src={objectURL}
+							ngrids={numberOfBeds}
+							gridWidth={bedWidth}
+							isActive={false}
+						/>
+						<p>{JSON.stringify(selectedAreas)}</p>
 						<div className="flex gap-4 w-72">
 							<CancelButton onClick={() => window.location.reload()}>
 								Volver a seleccionar
