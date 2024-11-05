@@ -60,41 +60,38 @@ export default function ImageGrid({
 				}
 			}
 
-			// Actualizar el tamaño y la posición de las áreas existentes solo si no están ya definidas
+			// Actualizar el tamaño y la posición de las áreas existentes
 			return newAreas.map((area) => {
-				if (area.x === 0 && area.y === 0) {
-					let newX = area.x;
-					let newY = area.y;
+				let newX = area.x;
+				let newY = area.y;
 
-					// Ajustar la posición y
-					const areaBottom = area.y + gridWidth * 2 * scaleFactor;
-					if (areaBottom > imageHeight) {
-						const excessY = areaBottom - imageHeight;
-						newY -= excessY;
-					} else if (area.y < 0) {
-						const excessY = Math.abs(area.y);
-						newY += excessY;
-					}
-
-					// Ajustar la posición x
-					const areaRight = area.x + gridWidth * scaleFactor;
-					if (areaRight > imageWidth) {
-						const excessX = areaRight - imageWidth;
-						newX -= excessX;
-					} else if (area.x < 0) {
-						const excessX = Math.abs(area.x);
-						newX += excessX;
-					}
-
-					return {
-						...area,
-						width: gridWidth,
-						height: gridWidth * 2,
-						x: newX,
-						y: newY,
-					};
+				// Ajustar la posición y
+				const areaBottom = area.y + gridWidth * 2 * scaleFactor;
+				if (areaBottom > imageHeight) {
+					const excessY = areaBottom - imageHeight;
+					newY -= excessY;
+				} else if (area.y < 0) {
+					const excessY = Math.abs(area.y);
+					newY += excessY;
 				}
-				return area;
+
+				// Ajustar la posición x
+				const areaRight = area.x + gridWidth * scaleFactor;
+				if (areaRight > imageWidth) {
+					const excessX = areaRight - imageWidth;
+					newX -= excessX;
+				} else if (area.x < 0) {
+					const excessX = Math.abs(area.x);
+					newX += excessX;
+				}
+
+				return {
+					...area,
+					width: gridWidth,
+					height: gridWidth * 2,
+					x: newX,
+					y: newY,
+				};
 			});
 		});
 	}, [ngrids, gridWidth, setSelectedAreas]);
@@ -147,8 +144,6 @@ export default function ImageGrid({
 					width={image.width * scaleFactor}
 					height={image.height * scaleFactor}
 					ref={stageRef}
-					scaleX={scaleFactor}
-					scaleY={scaleFactor}
 				>
 					<Layer>
 						<Image
@@ -168,8 +163,8 @@ export default function ImageGrid({
 									stroke="white"
 									strokeWidth={2}
 									draggable={isActive}
-									onDragMove={isActive ? handleDragMove : undefined}
-									onDragEnd={isActive ? () => handleDragEnd(index) : undefined}
+									onDragMove={handleDragMove}
+									onDragEnd={() => handleDragEnd(index)}
 								/>
 								<Text
 									x={area.x * scaleFactor + 5}
@@ -191,8 +186,8 @@ export default function ImageGrid({
 }
 
 interface Props {
+	isActive?: boolean;
 	src?: string;
 	ngrids?: number;
 	gridWidth?: number;
-	isActive?: boolean;
 }
