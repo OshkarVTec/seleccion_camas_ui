@@ -92,7 +92,6 @@ export default function App() {
 							gridWidth={bedWidth}
 							isActive={false}
 						/>
-						<p>{JSON.stringify(selectedAreas)}</p>
 						<div className="flex gap-4 w-72">
 							<CancelButton onClick={() => window.location.reload()}>
 								Volver a seleccionar
