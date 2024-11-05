@@ -5,16 +5,19 @@ import Header from "./components/landing/Header";
 import ActionButton from "./components/common/ActionButton";
 import ImageGrid from "./components/common/ImageGrid";
 import { useAreas } from "./components/common/AreaContext";
-import useImage from "use-image";
 import CancelButton from "./components/common/CancelButton";
+import { SCALE_FACTOR } from "./common/constants";
 const ipcRenderer = window.require
 	? window.require("electron").ipcRenderer
 	: null;
+const GRID_MIN_HEIGHT_FACTOR = 0.2;
 
 export default function App() {
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
 	const [numberOfBeds, setNumberOfBeds] = useState<number>(1);
-	const [bedWidth, setBedWidth] = useState<number>(200);
+	const [bedHeightFactor, setbedHeightFactor] = useState<number>(
+		GRID_MIN_HEIGHT_FACTOR
+	);
 	const [saved, setSaved] = useState<boolean>(false);
 	const { selectedAreas } = useAreas();
 	const [objectURL, setObjectURL] = useState<string>("");
@@ -31,12 +34,8 @@ export default function App() {
 		}
 	}, [selectedFile]);
 
-	const [image] = useImage(objectURL);
-	const imageHeight = image?.height || 756;
-
 	const saveDataAsJSON = (data: SelectedAreas[]) => {
 		ipcRenderer.send("save-json", data);
-
 		ipcRenderer.once(
 			"save-json-response",
 			(_: any, responseMessage: string) => {
@@ -57,8 +56,10 @@ export default function App() {
 		}
 		setNumberOfBeds(numberOfBeds);
 	};
-	const handleBedWidthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setBedWidth(parseInt(event.target.value));
+	const handlebedHeightFactorChange = (
+		event: React.ChangeEvent<HTMLInputElement>
+	) => {
+		setbedHeightFactor(parseFloat(event.target.value));
 	};
 	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files && event.target.files.length > 0) {
@@ -66,11 +67,15 @@ export default function App() {
 		}
 	};
 	const handleSave = () => {
+		const scaledAreas = selectedAreas.map((area: SelectedAreas) => ({
+			x: area.x,
+			y: area.y,
+			width: area.width / SCALE_FACTOR,
+			height: area.height / SCALE_FACTOR,
+		}));
 		setSaved(true);
-		// Usage example
-
-		saveDataAsJSON(selectedAreas);
-		console.log(selectedAreas);
+		saveDataAsJSON(scaledAreas);
+		console.log(scaledAreas);
 	};
 
 	return (
@@ -89,7 +94,7 @@ export default function App() {
 						<ImageGrid
 							src={objectURL}
 							ngrids={numberOfBeds}
-							gridWidth={bedWidth}
+							gridHeightFactor={bedHeightFactor}
 							isActive={false}
 						/>
 						<div className="flex gap-4 w-72">
@@ -137,13 +142,11 @@ export default function App() {
 										5. Cuando estés listo, da clic en guardar. <br />
 									</Text>
 									<div className="flex gap-4 justify-around items-center">
-										<div
-											className={`w-3/4 h-[${imageHeight}px] overflow-hidden`}
-										>
+										<div className={`w-3/4 overflow-hidden`}>
 											<ImageGrid
 												src={objectURL}
 												ngrids={numberOfBeds}
-												gridWidth={bedWidth}
+												gridHeightFactor={bedHeightFactor}
 											/>
 										</div>
 										<div className="flex flex-col justify-center gap-10">
@@ -158,13 +161,14 @@ export default function App() {
 												/>
 											</label>
 											<label className="flex flex-col justify-center gap-2  p-2 border-2 border-solid border-green-800 rounded-xl">
-												Ancho de las camas
+												Altura de las camas
 												<input
 													type="range"
-													min="100"
-													max={image?.height ? image.height / 2 : 756 / 2}
-													value={bedWidth}
-													onChange={handleBedWidthChange}
+													min={GRID_MIN_HEIGHT_FACTOR}
+													max={1}
+													step={0.01}
+													value={bedHeightFactor}
+													onChange={handlebedHeightFactorChange}
 												/>
 											</label>
 											<ActionButton onClick={handleSave}>Guardar</ActionButton>
