@@ -14,7 +14,7 @@ const ipcRenderer = window.require
 export default function App() {
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
 	const [numberOfBeds, setNumberOfBeds] = useState<number>(1);
-	const [bedWidth, setBedWidth] = useState<number>(500);
+	const [bedWidth, setBedWidth] = useState<number>(200);
 	const [saved, setSaved] = useState<boolean>(false);
 	const { selectedAreas } = useAreas();
 	const [objectURL, setObjectURL] = useState<string>("");
@@ -32,7 +32,7 @@ export default function App() {
 	}, [selectedFile]);
 
 	const [image] = useImage(objectURL);
-	const imageHeight = image?.height || 1000;
+	const imageHeight = image?.height || 756;
 
 	const saveDataAsJSON = (data: SelectedAreas[]) => {
 		ipcRenderer.send("save-json", data);
@@ -162,7 +162,7 @@ export default function App() {
 												<input
 													type="range"
 													min="100"
-													max={image?.height ? image.height / 2 : 1000}
+													max={image?.height ? image.height / 2 : 756 / 2}
 													value={bedWidth}
 													onChange={handleBedWidthChange}
 												/>

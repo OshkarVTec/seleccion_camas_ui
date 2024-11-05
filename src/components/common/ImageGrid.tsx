@@ -34,7 +34,7 @@ export default function ImageGrid({
 	const [image] = useImage(src || "");
 
 	const stageRef = useRef<any>(null);
-	const scaleFactor = 0.8;
+	const scaleFactor = 0.7;
 
 	const { selectedAreas, setSelectedAreas } = useAreas();
 
@@ -43,10 +43,8 @@ export default function ImageGrid({
 		setSelectedAreas(() => {
 			const newAreas = [...selectedAreas];
 
-			// Obtener el ancho y alto de la imagen (con escalado)
-			const stage = stageRef.current?.getStage();
-			const imageWidth = stage?.width() || 0;
-			const imageHeight = stage?.height() || 0;
+			const imageWidth = (image?.width || 0) * scaleFactor;
+			const imageHeight = (image?.height || 0) * scaleFactor;
 
 			console.log(selectedAreas);
 			// Si hay más cuadros que áreas actuales, agregar las nuevas áreas
@@ -66,6 +64,26 @@ export default function ImageGrid({
 				let newX = area.x;
 				let newY = area.y;
 
+				// Ajustar la posición y
+				const areaBottom = area.y * scaleFactor + gridWidth * 2;
+				console.log(area);
+				console.log(areaBottom);
+				console.log(imageHeight);
+				if (areaBottom >= imageHeight) {
+					const excessY = areaBottom - imageHeight;
+					newY -= excessY;
+				}
+				newY = Math.max(0, newY);
+
+				// Ajustar la posición x
+				const areaRight = area.x * scaleFactor + gridWidth;
+				if (areaRight >= imageWidth) {
+					const excessX = areaRight - imageWidth;
+					newX -= excessX;
+				}
+				newX = Math.max(0, newX);
+				console.log(selectedAreas);
+
 				return {
 					...area,
 					width: gridWidth,
@@ -75,7 +93,7 @@ export default function ImageGrid({
 				};
 			});
 		});
-	}, [ngrids, gridWidth, setSelectedAreas]);
+	}, [ngrids, gridWidth, setSelectedAreas, image]);
 
 	const handleDragEnd = (index: number) => {
 		if (stageRef.current) {
