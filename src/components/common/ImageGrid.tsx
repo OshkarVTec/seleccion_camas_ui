@@ -1,7 +1,8 @@
-import { useRef, useEffect } from "react";
-import { Stage, Layer, Image, Rect } from "react-konva";
-import useImage from "use-image";
-import { useAreas } from "./AreaContext";
+import React from 'react';
+import { useRef, useEffect } from 'react';
+import { Stage, Layer, Image, Rect, Text } from 'react-konva';
+import useImage from 'use-image';
+import { useAreas } from './AreaContext';
 
 const colors = [
 	"rgba(255, 255, 255, 0.4)", // Blanco semi-transparente
@@ -36,12 +37,12 @@ export default function ImageGrid({ src, ngrids = 4, gridWidth = 300 }: Props) {
 	useEffect(() => {
 		setSelectedAreas((prev: Area[]) => {
 			const newAreas = [...prev];
-	
+
 			// Obtener el ancho y alto de la imagen (con escalado)
 			const stage = stageRef.current?.getStage();
 			const imageWidth = stage?.width() || 0;
 			const imageHeight = stage?.height() || 0;
-	
+
 			// Si hay más cuadros que áreas actuales, agregar las nuevas áreas
 			if (ngrids > prev.length) {
 				for (let i = prev.length; i < ngrids; i++) {
@@ -53,12 +54,12 @@ export default function ImageGrid({ src, ngrids = 4, gridWidth = 300 }: Props) {
 					});
 				}
 			}
-	
+
 			// Actualizar el tamaño y la posición de las áreas existentes
 			return newAreas.map((area) => {
 				let newX = area.x;
 				let newY = area.y;
-	
+
 				// Ajustar la posición y
 				const areaBottom = area.y + gridWidth * 2 * scaleFactor;
 				if (areaBottom > imageHeight) {
@@ -66,9 +67,9 @@ export default function ImageGrid({ src, ngrids = 4, gridWidth = 300 }: Props) {
 					newY -= excessY;
 				} else if (area.y < 0) {
 					const excessY = Math.abs(area.y);
-					newY += excessY; 
+					newY += excessY;
 				}
-	
+
 				// Ajustar la posición x
 				const areaRight = area.x + gridWidth * scaleFactor;
 				if (areaRight > imageWidth) {
@@ -78,7 +79,7 @@ export default function ImageGrid({ src, ngrids = 4, gridWidth = 300 }: Props) {
 					const excessX = Math.abs(area.x);
 					newX += excessX;
 				}
-	
+
 				return {
 					...area,
 					width: gridWidth,
@@ -88,7 +89,7 @@ export default function ImageGrid({ src, ngrids = 4, gridWidth = 300 }: Props) {
 				};
 			});
 		});
-	}, [ngrids, gridWidth, setSelectedAreas]);	
+	}, [ngrids, gridWidth, setSelectedAreas]);
 
 	const handleDragEnd = (index: number) => {
 		if (stageRef.current) {
@@ -148,20 +149,29 @@ export default function ImageGrid({ src, ngrids = 4, gridWidth = 300 }: Props) {
 							height={image.height * scaleFactor}
 						/>
 						{selectedAreas.map((area: Area, index: number) => (
-							<Rect
-								key={index}
-								id={`rect-${index}`}
-								x={area.x * scaleFactor}
-								y={area.y * scaleFactor}
-								width={area.width * scaleFactor}
-								height={area.height * scaleFactor}
-								fill={colors[index % colors.length]}
-								stroke="white"
-								strokeWidth={2}
-								draggable
-								onDragMove={handleDragMove}
-								onDragEnd={() => handleDragEnd(index)}
-							/>
+							<React.Fragment key={index}>
+								<Rect
+									id={`rect-${index}`}
+									x={area.x * scaleFactor}
+									y={area.y * scaleFactor}
+									width={area.width * scaleFactor}
+									height={area.height * scaleFactor}
+									fill={colors[index % colors.length]}
+									stroke="white"
+									strokeWidth={2}
+									draggable
+									onDragMove={handleDragMove}
+									onDragEnd={() => handleDragEnd(index)}
+								/>
+								<Text
+									x={area.x * scaleFactor + 5}
+									y={area.y * scaleFactor + 5}
+									text={String.fromCharCode(65 + index)}
+									fontSize={50}
+									fill="black"
+									fontStyle="bold"
+								/>
+							</React.Fragment>
 						))}
 					</Layer>
 				</Stage>

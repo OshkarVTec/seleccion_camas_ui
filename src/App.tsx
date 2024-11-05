@@ -154,7 +154,7 @@ export default function App() {
 												Ancho de las camas
 												<input
 													type="range"
-													min="30"
+													min="100"
 													max={image?.height ? image.height / 2 : 1000}
 													value={bedWidth}
 													onChange={handleBedWidthChange}
