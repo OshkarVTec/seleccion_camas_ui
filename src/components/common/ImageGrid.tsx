@@ -40,17 +40,18 @@ export default function ImageGrid({
 
 	// Generar las áreas
 	useEffect(() => {
-		setSelectedAreas((prev: Area[]) => {
-			const newAreas = [...prev];
+		setSelectedAreas(() => {
+			const newAreas = [...selectedAreas];
 
 			// Obtener el ancho y alto de la imagen (con escalado)
 			const stage = stageRef.current?.getStage();
 			const imageWidth = stage?.width() || 0;
 			const imageHeight = stage?.height() || 0;
 
+			console.log(selectedAreas);
 			// Si hay más cuadros que áreas actuales, agregar las nuevas áreas
-			if (ngrids > prev.length) {
-				for (let i = prev.length; i < ngrids; i++) {
+			if (ngrids > selectedAreas.length) {
+				for (let i = selectedAreas.length; i < ngrids; i++) {
 					newAreas.push({
 						x: 0,
 						y: 0,
@@ -64,26 +65,6 @@ export default function ImageGrid({
 			return newAreas.map((area) => {
 				let newX = area.x;
 				let newY = area.y;
-
-				// Ajustar la posición y
-				const areaBottom = area.y + gridWidth * 2 * scaleFactor;
-				if (areaBottom > imageHeight) {
-					const excessY = areaBottom - imageHeight;
-					newY -= excessY;
-				} else if (area.y < 0) {
-					const excessY = Math.abs(area.y);
-					newY += excessY;
-				}
-
-				// Ajustar la posición x
-				const areaRight = area.x + gridWidth * scaleFactor;
-				if (areaRight > imageWidth) {
-					const excessX = areaRight - imageWidth;
-					newX -= excessX;
-				} else if (area.x < 0) {
-					const excessX = Math.abs(area.x);
-					newX += excessX;
-				}
 
 				return {
 					...area,
@@ -101,8 +82,8 @@ export default function ImageGrid({
 			const rect = stageRef.current.getStage().findOne(`#rect-${index}`);
 			const { x, y } = rect.position();
 
-			setSelectedAreas((prev: Area[]) => {
-				const newAreas = [...prev];
+			setSelectedAreas(() => {
+				const newAreas = [...selectedAreas];
 				newAreas[index] = {
 					...newAreas[index],
 					x: x / scaleFactor,
