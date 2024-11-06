@@ -154,6 +154,8 @@ export default function ImageGrid({
 								x={area.x}
 								y={area.y}
 								draggable={isActive}
+								width={area.width}
+								height={area.height}
 								onDragMove={handleDragMove}
 								onDragEnd={() => handleDragEnd(index)}
 							>
