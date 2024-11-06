@@ -1,4 +1,3 @@
-import React from "react";
 import { useRef, useEffect } from "react";
 import { Stage, Layer, Image, Rect, Text, Group } from "react-konva";
 import useImage from "use-image";
@@ -71,9 +70,6 @@ export default function ImageGrid({
 
 				// Ajustar la posición y
 				const areaBottom = area.y + gridHeight;
-				console.log(area);
-				console.log(areaBottom);
-				console.log(imageHeight);
 				if (areaBottom >= imageHeight) {
 					const excessY = areaBottom - imageHeight;
 					newY -= excessY;
