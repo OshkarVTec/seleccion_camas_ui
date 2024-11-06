@@ -137,6 +137,11 @@ export default function App() {
 										2. Ajusta el ancho de las camas con el control deslizante.{" "}
 										<br />
 										3. Mueve las cuadriculas para ajustarlas a las camas. <br />
+										<b>
+											&nbsp;&nbsp;&nbsp;&nbsp; Las camas deben verse completas.
+											El modelo no funciona con camas cortadas.
+										</b>
+										<br />
 										4. Puedes ir probando los cambios e ir ajustando los
 										parámetros. <br />
 										5. Cuando estés listo, da clic en guardar. <br />
