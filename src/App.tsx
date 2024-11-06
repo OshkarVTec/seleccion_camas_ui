@@ -111,19 +111,18 @@ export default function App() {
 						<div className="flex flex-col gap-2 my-10">
 							<PageTitle>Instrucciones generales</PageTitle>
 							<Text>
-								En esta aplicación se seleccionará una foto de base para definir
-								el número de camas y el tamaño de cada una de ellas. Para de
-								esta manera, poder compartir información al modelo. Se detallará
-								de mejor manera cada instrucción en el apartado correspondiente.
+								Selecciona una foto base para definir el número de camas y su
+								tamaño. Esto permitirá compartir información con el modelo. Cada
+								instrucción se detallará en el apartado correspondiente.
 							</Text>
 						</div>
 						<div className="flex flex-col gap-2 my-10">
 							<PageTitle>Selección de fotos</PageTitle>
 							<Text>
-								Selecciona una foto con las camas que deseas analizar, esta foto
-								debe de estar en la misma posición que en la que se buscará
-								hacer el análisis de tiempo real. Debe ser una imágen de formato
-								jpg, jpeg o png.
+								Selecciona una imagen de las camas que deseas analizar. La
+								imagen debe estar en la misma posición que se utilizará para el
+								análisis en tiempo real. Asegúrate de que el formato de la
+								imagen sea jpg, jpeg o png.
 							</Text>
 							<input type="file" accept="image/*" onChange={handleFileChange} />
 						</div>
