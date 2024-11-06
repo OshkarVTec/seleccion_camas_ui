@@ -1,6 +1,6 @@
 import React from "react";
 import { useRef, useEffect } from "react";
-import { Stage, Layer, Image, Rect, Text } from "react-konva";
+import { Stage, Layer, Image, Rect, Text, Group } from "react-konva";
 import useImage from "use-image";
 import { useAreas } from "./AreaContext";
 import { SCALE_FACTOR } from "../../common/constants";
@@ -152,29 +152,31 @@ export default function ImageGrid({
 							height={image.height * SCALE_FACTOR}
 						/>
 						{selectedAreas.map((area: Area, index: number) => (
-							<React.Fragment key={index}>
+							<Group
+								key={index}
+								id={`rect-${index}`}
+								x={area.x}
+								y={area.y}
+								draggable={isActive}
+								onDragMove={handleDragMove}
+								onDragEnd={() => handleDragEnd(index)}
+							>
 								<Rect
-									id={`rect-${index}`}
-									x={area.x}
-									y={area.y}
 									width={area.width}
 									height={area.height}
 									fill={colors[index % colors.length]}
 									stroke="white"
 									strokeWidth={2}
-									draggable={isActive}
-									onDragMove={handleDragMove}
-									onDragEnd={() => handleDragEnd(index)}
 								/>
 								<Text
-									x={area.x + 5}
-									y={area.y + 5}
+									x={5}
+									y={5}
 									text={String.fromCharCode(65 + index)}
 									fontSize={50}
 									fill="black"
 									fontStyle="bold"
 								/>
-							</React.Fragment>
+							</Group>
 						))}
 					</Layer>
 				</Stage>
