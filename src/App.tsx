@@ -68,8 +68,8 @@ export default function App() {
 	};
 	const handleSave = () => {
 		const scaledAreas = selectedAreas.map((area: SelectedAreas) => ({
-			x: area.x,
-			y: area.y,
+			x: area.x / SCALE_FACTOR,
+			y: area.y / SCALE_FACTOR,
 			width: area.width / SCALE_FACTOR,
 			height: area.height / SCALE_FACTOR,
 		}));
