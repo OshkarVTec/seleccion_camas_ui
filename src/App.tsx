@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import PageTitle from "./components/common/PageTitle";
+import PageSubTitle from "./components/common/PageSubTitle";
 import Text from "./components/common/Text";
 import Header from "./components/landing/Header";
 import ActionButton from "./components/common/ActionButton";
@@ -85,11 +86,11 @@ export default function App() {
 			<main className="bg-white flex flex-col p-10">
 				{saved ? (
 					<div className="flex flex-col gap-2 my-10">
-						<PageTitle>¡Listo!</PageTitle>
+						<PageSubTitle>¡Listo!</PageSubTitle>
 						<Text>
-							Se ha guardado tu selección, el modelo está listo. Ya puedes
-							cerrar esta aplicación. Se recomienda tomar una captura de
-							pantalla del orden de las camas.{" "}
+							Tu selección se ha guardado, y el modelo está listo. Ya puedes 
+							cerrar esta aplicación. Te recomendamos tomar una captura de 
+							pantalla para recordar el orden de las camas.{" "}
 						</Text>
 						<ImageGrid
 							src={objectURL}
@@ -108,34 +109,38 @@ export default function App() {
 					</div>
 				) : (
 					<>
-						<div className="flex flex-col gap-2 my-10">
-							<PageTitle>Instrucciones generales</PageTitle>
-							<Text>
-								Selecciona una foto base para definir el número de camas y su
-								tamaño. Esto permitirá compartir información con el modelo. Cada
-								instrucción se detallará en el apartado correspondiente.
-							</Text>
+						<div className="flex flex-col gap-2 my-0">
+							<PageTitle>Instrucciones</PageTitle>
+							{/* <Text>
+								Elige una foto de referencia para definir el número y tamaño de las camas.
+								Las instrucciones específicas se explicarán en cada sección correspondiente.
+							</Text> */}
 						</div>
 						<div className="flex flex-col gap-2 my-10">
-							<PageTitle>Selección de fotos</PageTitle>
+							<PageSubTitle>Selección de foto</PageSubTitle>
 							<Text>
-								Selecciona una imagen de las camas que deseas analizar. La
-								imagen debe estar en la misma posición que se utilizará para el
-								análisis en tiempo real. Asegúrate de que el formato de la
-								imagen sea jpg, jpeg o png.
+								Selecciona una foto en formato jpg, jpeg o png de las camas que deseas analizar, asegurándote de 
+								que esté en la misma posición que usarás para el análisis en tiempo real. 
+								A continuación se muestra una imagen de referencia.{" "}
 							</Text>
+							<img src="./public/cows.jpeg" alt="Imagen de referencia" className="w-1/2 mx-auto my-4" />
 							<input type="file" accept="image/*" onChange={handleFileChange} />
 						</div>
 						<div className="flex flex-col gap-2 my-10">
 							{selectedFile && (
 								<>
-									<PageTitle>Selección de camas</PageTitle>
+									<PageSubTitle>Selección de camas</PageSubTitle>
 									<Text>
-										1. Agrega o quita camas con el campo de número de camas.{" "}
+										1. En el cuadro de "Número de camas" que se encuentra en la parte inferior derecha, usa las 
+										flechas para ajustar el número de camas o escribe el número directamente 
+										en el campo. Asegúrate de que el valor corresponda al total de camas que 
+										deseas incluir en el análisis.{" "}
 										<br />
-										2. Ajusta el ancho de las camas con el control deslizante.{" "}
+										2. En el cuadro "Altura de las camas", 
+										ajusta la altura de los rectángulos de colores utilizando el control deslizante, 
+										para que sean del mismo tamaño que las camas.
 										<br />
-										3. Mueve las cuadriculas para ajustarlas a las camas. <br />
+										3. Mueve los rectángulos para ajustarlos a las camas. <br />
 										<b>
 											&nbsp;&nbsp;&nbsp;&nbsp; Las camas deben verse completas.
 											El modelo no funciona con camas cortadas.
@@ -143,7 +148,8 @@ export default function App() {
 										<br />
 										4. Puedes ir probando los cambios e ir ajustando los
 										parámetros. <br />
-										5. Cuando estés listo, da clic en guardar. <br />
+										5. Cuando hayas configurado el número y la altura de las camas, 
+										haz clic en el botón verde "Guardar" para almacenar los ajustes. <br />
 									</Text>
 									<div className="flex gap-4 justify-around items-center">
 										<div className={`w-3/4 overflow-hidden`}>
