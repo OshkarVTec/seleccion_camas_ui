@@ -88,8 +88,8 @@ export default function App() {
 					<div className="flex flex-col gap-2 my-10">
 						<PageSubTitle>¡Listo!</PageSubTitle>
 						<Text>
-							Tu selección se ha guardado, y el modelo está listo. Ya puedes 
-							cerrar esta aplicación. Te recomendamos tomar una captura de 
+							Tu selección se ha guardado, y el modelo está listo. Ya puedes
+							cerrar esta aplicación. Te recomendamos tomar una captura de
 							pantalla para recordar el orden de las camas.{" "}
 						</Text>
 						<ImageGrid
@@ -119,25 +119,37 @@ export default function App() {
 						<div className="flex flex-col gap-2 my-10">
 							<PageSubTitle>Selección de foto</PageSubTitle>
 							<Text>
-								Selecciona una foto en formato jpg, jpeg o png de las camas que deseas analizar, asegurándote de 
-								que esté en la misma posición que usarás para el análisis en tiempo real. 
-								A continuación se muestra una imagen de referencia.{" "}
+								Selecciona una foto en formato jpg, jpeg o png de las camas que
+								deseas analizar, asegurándote de que esté en la misma posición
+								que usarás para el análisis en tiempo real. A continuación se
+								muestra una imagen de referencia.{" "}
 							</Text>
-							<img src="./public/cows.jpeg" alt="Imagen de referencia" className="w-1/2 mx-auto my-4" />
-							<input type="file" accept="image/*" onChange={handleFileChange} />
+							<img
+								src="./public/cows.jpeg"
+								alt="Imagen de referencia"
+								className="w-1/2 mx-auto my-4"
+							/>
+							<div className="flex gap-4">
+								<label>Selecciona la foto: </label>
+								<input
+									type="file"
+									accept="image/*"
+									onChange={handleFileChange}
+								/>
+							</div>
 						</div>
 						<div className="flex flex-col gap-2 my-10">
 							{selectedFile && (
 								<>
 									<PageSubTitle>Selección de camas</PageSubTitle>
 									<Text>
-										1. En el cuadro de "Número de camas" que se encuentra en la parte inferior derecha, usa las 
-										flechas para ajustar el número de camas o escribe el número directamente 
-										en el campo. Asegúrate de que el valor corresponda al total de camas que 
-										deseas incluir en el análisis.{" "}
-										<br />
-										2. En el cuadro "Altura de las camas", 
-										ajusta la altura de los rectángulos de colores utilizando el control deslizante, 
+										1. En el cuadro de "Número de camas" que se encuentra en la
+										parte inferior derecha, usa las flechas para ajustar el
+										número de camas o escribe el número directamente en el
+										campo. Asegúrate de que el valor corresponda al total de
+										camas que deseas incluir en el análisis. <br />
+										2. En el cuadro "Altura de las camas", ajusta la altura de
+										los rectángulos de colores utilizando el control deslizante,
 										para que sean del mismo tamaño que las camas.
 										<br />
 										3. Mueve los rectángulos para ajustarlos a las camas. <br />
@@ -148,8 +160,9 @@ export default function App() {
 										<br />
 										4. Puedes ir probando los cambios e ir ajustando los
 										parámetros. <br />
-										5. Cuando hayas configurado el número y la altura de las camas, 
-										haz clic en el botón verde "Guardar" para almacenar los ajustes. <br />
+										5. Cuando hayas configurado el número y la altura de las
+										camas, haz clic en el botón verde "Guardar" para almacenar
+										los ajustes. <br />
 									</Text>
 									<div className="flex gap-4 justify-around items-center">
 										<div className={`w-3/4 overflow-hidden`}>
