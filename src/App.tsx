@@ -125,7 +125,7 @@ export default function App() {
 								muestra una imagen de referencia.{" "}
 							</Text>
 							<img
-								src="./public/cows.jpeg"
+								src="cows.jpeg"
 								alt="Imagen de referencia"
 								className="w-1/2 mx-auto my-4"
 							/>
