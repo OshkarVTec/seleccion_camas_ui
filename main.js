@@ -47,7 +47,7 @@ app.on("window-all-closed", () => {
 
 // Handle saving JSON output
 ipcMain.on("save-json", (event, jsonData) => {
-	const filePath = join(app.getPath("documents"), "output.json");
+	const filePath = join(__dirname, "coordinates.json");
 
 	fs.writeFile(filePath, JSON.stringify(jsonData, null, 2), (err) => {
 		if (err) {
