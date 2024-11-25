@@ -74,12 +74,6 @@
 					"config": {
 						"name": "seleccion_camas_ui_linux"
 					}
-				},
-				{
-					"name": "@electron-forge/maker-rpm",
-					"config": {
-						"name": "seleccion_camas_ui_linux"
-					}
 				}
 			]
 		}
