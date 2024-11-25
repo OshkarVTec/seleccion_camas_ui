@@ -88,9 +88,10 @@ export default function App() {
 					<div className="flex flex-col gap-2 my-10">
 						<PageSubTitle>¡Listo!</PageSubTitle>
 						<Text>
-							Tu selección se ha guardado, y el modelo está listo. Ya puedes
-							cerrar esta aplicación. Te recomendamos tomar una captura de
-							pantalla para recordar el orden de las camas.{" "}
+							Tu selección se ha guardado en un archivo llamado{" "}
+							<em>coordinates.json</em> en la carpeta <em>Documentos</em> de tu
+							dispositivo. Ya puedes cerrar esta aplicación. Te recomendamos
+							tomar una captura de pantalla para recordar el orden de las camas.{" "}
 						</Text>
 						<ImageGrid
 							src={objectURL}
