@@ -1,5 +1,6 @@
 {
-	"name": "seleccion_camas_ui",
+	"name": "seleccion_camas",
+	"productName": "Seleccion Camas",
 	"description": "An Electron application to select beds",
 	"private": true,
 	"version": "0.0.0",
