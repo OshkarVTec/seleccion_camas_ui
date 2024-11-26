@@ -1,6 +1,6 @@
 {
 	"name": "seleccion_camas",
-	"productName": "Seleccion Camas",
+	"productName": "Seleccion camas",
 	"authors": [
 		"Oskar Villa",
 		"Luis Cruz"
@@ -51,36 +51,5 @@
 		"typescript": "^5.5.3",
 		"typescript-eslint": "^8.7.0",
 		"vite": "^5.4.8"
-	},
-	"config": {
-		"forge": {
-			"packagerConfig": {
-				"icon": "assets/icons/icon"
-			},
-			"makers": [
-				{
-					"name": "@electron-forge/maker-squirrel",
-					"config": {
-						"name": "seleccion_camas_ui",
-						"exeName": "seleccion_camas_ui_windows"
-					}
-				},
-				{
-					"name": "@electron-forge/maker-zip",
-					"platforms": [
-						"darwin"
-					],
-					"config": {
-						"name": "seleccion_camas_ui_mac"
-					}
-				},
-				{
-					"name": "@electron-forge/maker-deb",
-					"config": {
-						"name": "seleccion_camas_ui_linux"
-					}
-				}
-			]
-		}
 	}
 }
